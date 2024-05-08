@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 export default function Footer({ user, type = "desktop" }: FooterProps) {
-  console.log(type);
   return (
     <footer className="footer">
       <div className={type === "mobile" ? "footer_name-mobile" : "footer_name"}>
