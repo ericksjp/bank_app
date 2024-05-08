@@ -15,11 +15,11 @@ export default function Sidebar({ user }: SiderbarProps) {
         <Link href="/" className="flex mb-12 cursor-pointer items-center gap-2">
           <Image
             src="/icons/logo.svg"
-            width={34}
             height={34}
+            width={34}
             alt="IAGM logo"
             className="size-[24px] max-xl:size-14"
-          ></Image>
+          />
           <h1 className="sidebar-logo">IAGM</h1>
         </Link>
 
