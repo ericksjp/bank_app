@@ -276,7 +276,7 @@
 
   /* Auth Form */
   .auth-form {
-    @apply flex min-h-screen w-full max-w-[420px] flex-col justify-center gap-5 py-10 md:gap-8;
+    @apply flex h-full justify-center w-full max-w-[420px] flex-col gap-5 py-10 md:gap-8 md:h-screen;
   }
 
   .form-item {
@@ -378,5 +378,13 @@
 
   .sidebar-label {
     @apply text-16 font-semibold text-black-2 max-xl:hidden;
+  }
+
+  .input-form {
+    @apply z-10 bg-transparent input-class focus-visible:ring-0 focus:ring-green-300;
+  }
+
+  .input-error {
+    @apply border-red-500 focus:outline-red-500;
   }
 }

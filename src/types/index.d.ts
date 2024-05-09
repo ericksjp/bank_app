@@ -327,3 +327,22 @@ declare interface getBankProps {
 declare interface getBankByAccountIdProps {
   accountId: string;
 }
+
+declare interface CustomInputProps {
+  control: Control<any>;
+  name:
+    | "email"
+    | "password"
+    | "name"
+    | "ssn"
+    | "adress1"
+    | "city"
+    | "postalCode"
+    | "dateBirth"
+    | "state"
+    | "firstName"
+    | "lastName";
+  label: string;
+  placeholder: string;
+  invalid: boolean;
+}

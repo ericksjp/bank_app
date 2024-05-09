@@ -2,6 +2,7 @@
 import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -193,3 +194,37 @@ export const getTransactionStatus = (date: Date) => {
 
   return date > twoDaysAgo ? "Processing" : "Success";
 };
+
+export function formSchemaByType(type: "login" | "signup") {
+  return z.object({
+    firstName:
+      type === "login"
+        ? z.string().optional()
+        : z.string().min(2, "First name must be at least 2 characters"),
+    lastName:
+      type === "login"
+        ? z.string().optional()
+        : z.string().min(2, "Last name must be at least 2 characters"),
+    adress1: type === "login" ? z.string().optional() : z.string().max(50),
+    state:
+      type === "login"
+        ? z.string().optional()
+        : z.string().min(2, "State must be at least 2 characters").max(2),
+    city:
+      type === "login"
+        ? z.string().optional()
+        : z.string().max(50, "City name must be at least 2 characters"),
+    postalCode:
+      type === "login" ? z.string().optional() : z.string().min(3).max(6),
+    dateBirth:
+      type === "login"
+        ? z.string().optional()
+        : z.string().length(10, "Date of birth must be 10 characters"),
+    ssn:
+      type === "login"
+        ? z.string().optional()
+        : z.string().length(4, "SSN must be 4 characters"),
+    email: z.string().email(),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+  });
+}

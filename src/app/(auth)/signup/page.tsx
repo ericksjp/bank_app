@@ -1,3 +1,9 @@
+import AuthForm from "@/components/AuthForm";
+
 export default function SignUp() {
-  return <div>SignUp</div>;
+  return (
+    <section className="flex-center max-sm:px-6">
+      <AuthForm type="signup" />
+    </section>
+  );
 }

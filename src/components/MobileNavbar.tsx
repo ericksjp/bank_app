@@ -4,6 +4,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetOverlay,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { sidebarLinks } from "@/constants";
@@ -58,8 +59,7 @@ export default function MobileNavbar({ user }: MobileNavProps) {
             <SheetClose asChild>
               <nav className="flex h-full flex-col gap-6 pt-16 text-white">
                 {sidebarLinks.map((item) => {
-                  const isActive =
-                    pathName === item.route || pathName.startsWith(item.route);
+                  const isActive = pathName === item.route;
 
                   return (
                     <SheetClose asChild key={item.route}>
