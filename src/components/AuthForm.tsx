@@ -11,15 +11,18 @@ import { useForm } from "react-hook-form";
 import CustomInput from "./CustomInput";
 import { Loader2 } from "lucide-react";
 import { formSchemaByType } from "@/lib/utils";
+import { login, signUp } from "@/lib/actions/user.action";
+import { useRouter } from "next/navigation";
 
 export default function AuthForm({ type }: { type: "login" | "signup" }) {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const formSchema = formSchemaByType(type);
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchemaByType(type)),
+    resolver: zodResolver(formSchema),
     defaultValues:
       type === "login"
         ? { email: "", password: "" }
@@ -30,30 +33,28 @@ export default function AuthForm({ type }: { type: "login" | "signup" }) {
             city: "",
             state: "",
             postalCode: "",
-            dateBirth: "",
+            dateOfBirth: "",
             ssn: "",
             email: "",
             password: "",
           },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(data: z.infer<typeof formSchema>) {
     setLoading(true);
-
     try {
       if (type === "signup") {
-        // const newUser = await signIn(data);
-        // setUser(newUser);
+        const newUser = await signUp(data);
+        setUser(newUser);
       }
 
       if (type === "login") {
-        // const response = await login({
-        //   email: data.email,
-        //   password: data.password,
-        // });
-        //
-        // if (response) router.push("/");
+        const response = await login({
+          email: data.email,
+          password: data.password,
+        });
+
+        if (response) router.push("/");
       }
     } catch (error) {
       console.error(error);
@@ -64,19 +65,22 @@ export default function AuthForm({ type }: { type: "login" | "signup" }) {
 
   return (
     <section className="auth-form">
-      <header className="flex flex-col gap-5 md:gap-8 justify-between">
-        <Link href="/" className="cursor-pointer flex items-center gap-3">
+      <header className="flex flex-col justify-between gap-2 md:gap-8 md:flex-row mt-10 md:mt-0">
+        <Link
+          href="/"
+          className="cursor-pointer flex items-center gap-3 self-center md:self-auto"
+        >
           <Image src="/icons/logo.svg" height={40} width={40} alt="IAGM logo" />
           <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">
-            IAGM
+            Testnam
           </h1>
         </Link>
 
-        <div className="flex flex-col gap-1 md:gap-3">
+        <div className="flex items-end gap-2 self-center md:self-auto md:flex-col">
           <h1 className="font-bold text-24 lg:text-36 text-gray-900">
             {user ? "Link Account" : type === "login" ? "Login" : "Sign Up"}
           </h1>
-          <p className="text-16 font-normal text-gray-600">
+          <p className="text-16 font-normal text-gray-600 text-end">
             {user
               ? "Link your account to get startet"
               : "Please enter your details"}
@@ -149,10 +153,10 @@ export default function AuthForm({ type }: { type: "login" | "signup" }) {
 
                   <CustomInput
                     control={form.control}
-                    name="dateBirth"
+                    name="dateOfBirth"
                     label="Date of Birth"
                     placeholder="yyyy-mm-dd"
-                    invalid={form.getFieldState("dateBirth").invalid}
+                    invalid={form.getFieldState("dateOfBirth").invalid}
                   />
 
                   <CustomInput

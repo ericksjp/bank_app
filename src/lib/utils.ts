@@ -216,7 +216,7 @@ export function formSchemaByType(type: "login" | "signup") {
         : z.string().max(50, "City name must be at least 2 characters"),
     postalCode:
       type === "login" ? z.string().optional() : z.string().min(3).max(6),
-    dateBirth:
+    dateOfBirth:
       type === "login"
         ? z.string().optional()
         : z.string().length(10, "Date of birth must be 10 characters"),
@@ -225,6 +225,6 @@ export function formSchemaByType(type: "login" | "signup") {
         ? z.string().optional()
         : z.string().length(4, "SSN must be 4 characters"),
     email: z.string().email(),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z.string().min(8, "Password must be at least 6 characters"),
   });
 }

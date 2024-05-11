@@ -276,7 +276,7 @@
 
   /* Auth Form */
   .auth-form {
-    @apply flex h-full justify-center w-full max-w-[420px] flex-col gap-5 py-10 md:gap-8 md:h-screen;
+    @apply flex h-screen justify-start w-full max-w-[420px] flex-col gap-5 md:gap-8 md:h-full md:py-10 md:justify-center;
   }
 
   .form-item {
@@ -386,5 +386,9 @@
 
   .input-error {
     @apply border-red-500 focus:outline-red-500;
+  }
+
+  .large {
+    @apply grid min-h-[720px] w-[1000px] grid-cols-2 items-center rounded-sm border-2 border-gray-300 m-auto text-center;
   }
 }
