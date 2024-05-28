@@ -13,6 +13,7 @@ import { Loader2 } from "lucide-react";
 import { formSchemaByType } from "@/lib/utils";
 import { login, signUp } from "@/lib/actions/user.action";
 import { useRouter } from "next/navigation";
+import { PlaidLink } from "./PlaidLink";
 
 export default function AuthForm({ type }: { type: "login" | "signup" }) {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function AuthForm({ type }: { type: "login" | "signup" }) {
         : {
             firstName: "",
             lastName: "",
-            adress1: "",
+            address1: "",
             city: "",
             state: "",
             postalCode: "",
@@ -44,7 +45,20 @@ export default function AuthForm({ type }: { type: "login" | "signup" }) {
     setLoading(true);
     try {
       if (type === "signup") {
-        const newUser = await signUp(data);
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address1!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email,
+          password: data.password,
+        };
+
+        const newUser = await signUp(userData);
         setUser(newUser);
       }
 
@@ -65,30 +79,31 @@ export default function AuthForm({ type }: { type: "login" | "signup" }) {
 
   return (
     <section className="auth-form">
-      <header className="flex flex-col justify-between gap-2 md:gap-8 md:flex-row mt-10 md:mt-0">
+      <header className="flex flex-col justify-between items-center gap-0 sm:gap-2 md:gap-8 mt-10 md:mt-0 sm:flex-row">
         <Link
           href="/"
-          className="cursor-pointer flex items-center gap-3 self-center md:self-auto"
+          className="cursor-pointer flex self-baseline items-center gap-3 sm:self-auto"
         >
           <Image src="/icons/logo.svg" height={40} width={40} alt="IAGM logo" />
-          <h1 className="text-26 font-ibm-plex-serif font-bold text-black-1">
+          <h1 className="text-30 font-ibm-plex-serif font-bold text-black-1">
             Testnam
           </h1>
         </Link>
 
-        <div className="flex items-end gap-2 self-center md:self-auto md:flex-col">
-          <h1 className="font-bold text-24 lg:text-36 text-gray-900">
-            {user ? "Link Account" : type === "login" ? "Login" : "Sign Up"}
-          </h1>
-          <p className="text-16 font-normal text-gray-600 text-end">
-            {user
-              ? "Link your account to get startet"
-              : "Please enter your details"}
-          </p>
-        </div>
+        <h1 className="font-bold self-end text-24 md:text-36 text-gray-900 sm:self-auto text-right">
+          {user ? "Link Account" : type === "login" ? "Login" : "Sign Up"}
+        </h1>
       </header>
+      <p className="text-16 font-normal text-gray-600 text-end -mt-4">
+        {user
+          ? "Link your account to get startet"
+          : "Please enter your details"}
+      </p>
+
       {user ? (
-        <div className="flex flex-col gap-4"></div>
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user} variant="primary" />
+        </div>
       ) : (
         <Form {...form}>
           <form
@@ -117,10 +132,10 @@ export default function AuthForm({ type }: { type: "login" | "signup" }) {
 
                 <CustomInput
                   control={form.control}
-                  name="adress1"
-                  label="Adress"
+                  name="address1"
+                  label="Address"
                   placeholder="Enter your adress"
-                  invalid={form.getFieldState("adress1").invalid}
+                  invalid={form.getFieldState("address1").invalid}
                 />
 
                 <CustomInput

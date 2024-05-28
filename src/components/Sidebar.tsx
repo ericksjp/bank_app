@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import Footer from "./Footer";
 
 export default function Sidebar({ user }: SiderbarProps) {
-  console.log(user);
   const pathName = usePathname();
 
   return (

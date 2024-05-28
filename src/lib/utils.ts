@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // FORMAT DATE TIME
-export const formatDateTime = (dateString: Date) => {
+export function formatDateTime(dateString: Date) {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
     weekday: "short", // abbreviated weekday name (e.g., 'Mon')
     month: "short", // abbreviated month name (e.g., 'Oct')
@@ -64,7 +64,7 @@ export const formatDateTime = (dateString: Date) => {
     dateOnly: formattedDate,
     timeOnly: formattedTime,
   };
-};
+}
 
 export function formatAmount(amount: number): string {
   const formatter = new Intl.NumberFormat("en-US", {
@@ -76,11 +76,13 @@ export function formatAmount(amount: number): string {
   return formatter.format(amount);
 }
 
-export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
+export function parseStringify(value: any) {
+  return JSON.parse(JSON.stringify(value));
+}
 
-export const removeSpecialCharacters = (value: string) => {
+export function removeSpecialCharacters(value: string) {
   return value.replace(/[^\w\s]/gi, "");
-};
+}
 
 interface UrlQueryParams {
   params: string;
@@ -187,13 +189,13 @@ export function decryptId(id: string) {
   return atob(id);
 }
 
-export const getTransactionStatus = (date: Date) => {
+export function getTransactionStatus(date: Date) {
   const today = new Date();
   const twoDaysAgo = new Date(today);
   twoDaysAgo.setDate(today.getDate() - 2);
 
   return date > twoDaysAgo ? "Processing" : "Success";
-};
+}
 
 export function formSchemaByType(type: "login" | "signup") {
   return z.object({
@@ -205,7 +207,7 @@ export function formSchemaByType(type: "login" | "signup") {
       type === "login"
         ? z.string().optional()
         : z.string().min(2, "Last name must be at least 2 characters"),
-    adress1: type === "login" ? z.string().optional() : z.string().max(50),
+    address1: type === "login" ? z.string().optional() : z.string().max(50),
     state:
       type === "login"
         ? z.string().optional()
